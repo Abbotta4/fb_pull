@@ -1,0 +1,2 @@
+# Project is no longer being developed
+Facebook Graph API stopped supporting returning content of friends who haven't installed the app in API v2.0 and higher.<sup>[[1]](https://stackoverflow.com/a/49866195/3888080)</sup> Without the ability to access other users' content, and thus their photos, there is no way to use this API to download _all_ photos you are tagged in. A scraper will be necessary 😔
