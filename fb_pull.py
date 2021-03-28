@@ -1,5 +1,4 @@
 import requests, json, piexif, os, logging
-#from PIL import Image as image
 from configparser import ConfigParser
 from datetime import datetime
 
@@ -9,8 +8,6 @@ config = ConfigParser()
 config.read('config.ini')
 
 BASE_URI = "https://graph.facebook.com/v10.0/" # Graph API version 10.0
-#api_call = "me/photos"
-#api_call = "me?fields=name,photos{album,link,created_time,name}"
 ACCESS_TOKEN = config['DEFAULT']['access_token']
 
 def get_request_uri(api_call):
@@ -45,10 +42,6 @@ def get_photos():
             time = datetime.strptime(time, '%Y-%m-%dT%H:%M:%S%z').strftime('%Y%m%d%H%M%S')
             photographer = photo['from']['name']
             description = False if 'name' not in photo else photo['name']
-            #album = photo['album']
-            #album_name = album['name']
-            #album_ctime = datetime.strptime(album['created_time'], '%Y-%m-%dT%H:%M:%S%z').strftime('%Y%m%d%H%M%S')
-            #album_dir = fb_name + '/' + album_ctime + '_' + album_name
             try:
                 os.mkdir(photographer)
             except FileExistsError:
@@ -63,7 +56,6 @@ def get_photos():
         try:
             request_uri = j['paging']['next']
         except KeyError:
-            #break
             return nphotos
         r = requests.get(request_uri)
         logging.info("getting 'next': " + str(r))
@@ -71,6 +63,4 @@ def get_photos():
         photos = j['data']
 
 if __name__ == "__main__":
-#    if not setup_dir():
-        #get_photos()
-        print("dumped {} photos".format(get_photos()))
+    print("dumped {} photos".format(get_photos()))
